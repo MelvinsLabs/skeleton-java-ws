@@ -1,4 +1,6 @@
 
+[![Build Status](https://travis-ci.org/MelvinsLabs/skeleton-java-webapp.svg)](https://travis-ci.org/MelvinsLabs/skeleton-java-webapp)
+
 ## ReadMe First
 
 This repository holds a skeleton for a simple Java Web Application.
