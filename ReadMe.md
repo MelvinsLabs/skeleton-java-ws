@@ -1,5 +1,6 @@
 
 [![Build Status](https://travis-ci.org/MelvinsLabs/skeleton-java-webapp.svg)](https://travis-ci.org/MelvinsLabs/skeleton-java-webapp)
+[![Dependency Status](https://www.versioneye.com/user/projects/56640e86f376cc002c000c07/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56640e86f376cc002c000c07)
 
 ## ReadMe First
 
