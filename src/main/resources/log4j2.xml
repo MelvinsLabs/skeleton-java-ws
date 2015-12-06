@@ -3,7 +3,7 @@
 
     <Properties>
         <Property name="logFilePrefix">app-logs</Property>
-        <Property name="logPattern">%d{dd-MMM-yyyyTHH:mm:ss.SSSZ} [%t] %c - %m%n</Property>
+        <Property name="logPattern">%d{dd-MMM-yyyy HH:mm:ss.SSS} [%t] %c - %m%n</Property>
     </Properties>
 
     <Appenders>

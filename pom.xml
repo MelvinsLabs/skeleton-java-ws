@@ -18,6 +18,7 @@
         <java.version>1.8</java.version>
 
         <!-- 3rd Party Dependency Versions -->
+        <com.lmax.disruptor.version>3.3.2</com.lmax.disruptor.version>
         <io.springfox.version>2.2.2</io.springfox.version>
         <junit.version>4.12</junit.version>
         <org.apache.logging.log4j.version>2.4.1</org.apache.logging.log4j.version>
@@ -106,10 +107,12 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${org.apache.logging.log4j.version}</version>
         </dependency>
+
+        <!-- LMAX DISRUPTOR For Async Logging -->
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>3.3.2</version>
+            <version>${com.lmax.disruptor.version}</version>
         </dependency>
 
         <!-- DOCUMENTING API FRAMEWORK -->
