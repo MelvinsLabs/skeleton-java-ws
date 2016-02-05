@@ -2,7 +2,7 @@
  * 
  */
 
-package me.melvins.labs.configs;
+package me.melvins.labs.config;
 
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
@@ -20,9 +20,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 /**
- * Configuration for Swagger Implementation.
+ * Configuration for Swagger Implementation on this Web App.
  *
- * @author MelvinMathai
+ * @author Mels
  */
 @EnableSwagger2
 @Configuration
@@ -50,16 +50,18 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(true)
                 .globalResponseMessage(RequestMethod.GET,
                         Lists.newArrayList(
-                                new ResponseMessageBuilder().code(INTERNAL_SERVER_ERROR.value()).message
-                                        (INTERNAL_SERVER_ERROR.name())
-                                        .responseModel(new ModelRef("ERROR")).build()));
+                                new ResponseMessageBuilder()
+                                        .code(INTERNAL_SERVER_ERROR.value())
+                                        .message(INTERNAL_SERVER_ERROR.name())
+                                        .responseModel(new ModelRef("ERROR"))
+                                        .build()));
     }
 
     /**
      * @return
      */
     private ApiKey apiKey() {
-        return new ApiKey("mykey", "api_key", "header");
+        return new ApiKey("mykey", "api_key", "header"); // TODO
     }
 
 }

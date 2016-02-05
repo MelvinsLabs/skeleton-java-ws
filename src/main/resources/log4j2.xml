@@ -3,7 +3,7 @@
 
     <Properties>
         <Property name="logFilePrefix">app-logs</Property>
-        <Property name="logPattern">%d{dd-MMM-yyyy HH:mm:ss.SSS} [%t] %c - %m%n</Property>
+        <Property name="logPattern">%d{DEFAULT} [%level] %X{CID} %c - %m%n</Property>
     </Properties>
 
     <Appenders>
@@ -15,13 +15,9 @@
 
             <Policies>
                 <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="250 MB"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
             </Policies>
         </RollingRandomAccessFile>
-
-        <Async name="AsyncLogFile">
-            <AppenderRef ref="LogFile"/>
-        </Async>
 
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${logPattern}"/>
@@ -29,22 +25,22 @@
     </Appenders>
 
     <Loggers>
-        <AsyncLogger name="me.melvins.labs" level="DEBUG" additivity="false">
+        <AsyncLogger name="me.melvins.labs" level="DEBUG" additivity="false" includeLocation="true">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="AsyncLogFile"/>
+            <AppenderRef ref="LogFile"/>
         </AsyncLogger>
         <AsyncLogger name="org.springframework" level="WARN" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="AsyncLogFile"/>
+            <AppenderRef ref="LogFile"/>
         </AsyncLogger>
         <AsyncLogger name="org.apache" level="WARN" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="AsyncLogFile"/>
+            <AppenderRef ref="LogFile"/>
         </AsyncLogger>
 
-        <AsyncRoot level="INFO">
+        <AsyncRoot level="INFO" includeLocation="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="AsyncLogFile"/>
+            <AppenderRef ref="LogFile"/>
         </AsyncRoot>
     </Loggers>
 
