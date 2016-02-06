@@ -4,8 +4,6 @@
 
 package me.melvins.labs.vo;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 /**
  * @author Mels
  */
