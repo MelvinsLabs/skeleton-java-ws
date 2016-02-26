@@ -4,7 +4,7 @@
 
 package me.melvins.labs.exception;
 
-import me.melvins.labs.vo.RequestHeaderVO;
+import me.melvins.labs.pojo.vo.RequestHeaderVO;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;

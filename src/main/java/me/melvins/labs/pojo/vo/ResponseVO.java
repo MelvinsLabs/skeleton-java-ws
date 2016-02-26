@@ -2,7 +2,7 @@
  *
  */
 
-package me.melvins.labs.vo;
+package me.melvins.labs.pojo.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

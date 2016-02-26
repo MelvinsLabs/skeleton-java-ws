@@ -4,9 +4,10 @@
 
 package me.melvins.labs.exception.handling;
 
+import me.melvins.labs.exception.KnownException;
 import me.melvins.labs.exception.RequestHeaderValidationException;
 import me.melvins.labs.exception.UnknownException;
-import me.melvins.labs.vo.RequestHeaderVO;
+import me.melvins.labs.pojo.vo.RequestHeaderVO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,11 +33,24 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         Set<ConstraintViolation<RequestHeaderVO>> constraintViolations = ex.getConstraintViolations();
 
-        for (ConstraintViolation<RequestHeaderVO> s: constraintViolations){
+        for (ConstraintViolation<RequestHeaderVO> s : constraintViolations) {
         }
 
         HttpHeaders httpHeaders = new HttpHeaders();
         return handleExceptionInternal(ex, null, httpHeaders, BAD_REQUEST, webRequest);
+    }
+
+    @ExceptionHandler(value = KnownException.class)
+    public ResponseEntity<Object> handleKnownException(KnownException ex, WebRequest webRequest) {
+
+        HttpStatus httpStatus = ex.getHttpStatus();
+        ErrorCode errorCode = ex.getErrorCode();
+        String errorMessage = ex.getCustomMessage();
+
+        Error error = new Error(errorCode.name(), errorMessage);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        return handleExceptionInternal(ex, error, httpHeaders, httpStatus, webRequest);
     }
 
     @ExceptionHandler(value = UnknownException.class)
@@ -44,8 +58,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         HttpStatus httpStatus = ex.getHttpStatus();
         ErrorCode errorCode = ex.getErrorCode();
+        String errorMessage = ex.getException().getMessage();
 
-        Error error = new Error(errorCode.name(), errorCode.getMessage());
+        Error error = new Error(errorCode.name(), errorMessage);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         return handleExceptionInternal(ex, error, httpHeaders, httpStatus, webRequest);

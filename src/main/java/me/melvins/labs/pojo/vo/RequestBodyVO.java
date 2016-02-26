@@ -2,7 +2,7 @@
  *
  */
 
-package me.melvins.labs.vo;
+package me.melvins.labs.pojo.vo;
 
 /**
  * @author Mels

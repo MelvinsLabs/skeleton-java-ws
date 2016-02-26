@@ -4,14 +4,17 @@
 
 package me.melvins.labs.controller;
 
+import me.melvins.labs.capability.Capability;
+import me.melvins.labs.exception.KnownException;
 import me.melvins.labs.exception.RequestHeaderValidationException;
 import me.melvins.labs.exception.UnknownException;
 import me.melvins.labs.exception.handling.ErrorCode;
-import me.melvins.labs.vo.RequestHeaderVO;
-import me.melvins.labs.vo.ResponseVO;
+import me.melvins.labs.pojo.vo.RequestHeaderVO;
+import me.melvins.labs.pojo.vo.ResponseVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.MessageFormatMessageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ import java.util.Map;
 
 import static me.melvins.labs.utils.HeaderUtils.transformRequestHeader;
 import static me.melvins.labs.utils.HeaderUtils.validateRequestHeader;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 /**
  * @author Mels
@@ -29,6 +33,9 @@ import static me.melvins.labs.utils.HeaderUtils.validateRequestHeader;
 @RestController
 @RequestMapping(value = "Alive")
 public class AliveController {
+
+    @Autowired
+    private Capability capabilityImpl;
 
     private static final Logger LOGGER = LogManager.getLogger(AliveController.class,
             new MessageFormatMessageFactory());
@@ -52,6 +59,8 @@ public class AliveController {
 
             responseVO = new ResponseVO();
             responseVO.setStringList(strings);
+
+            capabilityImpl.process();
 
             // TODO transform Response Headers.
 
@@ -83,9 +92,13 @@ public class AliveController {
         if (ex instanceof RequestHeaderValidationException) {
             throw (RequestHeaderValidationException) ex;
 
+        } else if (ex instanceof KnownException) {
+            throw (KnownException) ex;
+
         } else {
-            LOGGER.error("Unknown Exception Detected", ex);
-            throw new UnknownException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.EC1000);
+            ErrorCode errorCode = ErrorCode.EC1000;
+            LOGGER.error(errorCode.toString(), ex);
+            throw new UnknownException(INTERNAL_SERVER_ERROR, errorCode, ex);
         }
     }
 

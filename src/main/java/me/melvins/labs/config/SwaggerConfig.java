@@ -12,6 +12,7 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -43,11 +44,9 @@ public class SwaggerConfig {
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
                 .build()
-                .pathMapping("/")
-                .useDefaultResponseMessages(true)
+                .apiInfo(apiInfo())
+                .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET,
                         Lists.newArrayList(
                                 new ResponseMessageBuilder()
@@ -60,8 +59,9 @@ public class SwaggerConfig {
     /**
      * @return
      */
-    private ApiKey apiKey() {
-        return new ApiKey("mykey", "api_key", "header"); // TODO
+    private ApiInfo apiInfo() {
+        return new ApiInfo("Skeleton Service", "Skeleton Java REST Service", "0.1",
+                "Terms", "Mels", "Licenced To Mels", "Licence URL");
     }
 
 }

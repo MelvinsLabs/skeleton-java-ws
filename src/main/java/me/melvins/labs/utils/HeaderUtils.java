@@ -5,7 +5,7 @@
 package me.melvins.labs.utils;
 
 import me.melvins.labs.exception.RequestHeaderValidationException;
-import me.melvins.labs.vo.RequestHeaderVO;
+import me.melvins.labs.pojo.vo.RequestHeaderVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.MessageFormatMessageFactory;
