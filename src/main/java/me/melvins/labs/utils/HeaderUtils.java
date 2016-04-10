@@ -12,6 +12,7 @@ import org.apache.logging.log4j.message.MessageFormatMessageFactory;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Map;
 import java.util.Set;
@@ -33,8 +34,7 @@ public class HeaderUtils {
             requestHeaderVO = (RequestHeaderVO) fillBean(headers, clazz);
 
         } catch (InstantiationException | IllegalAccessException ex) {
-            LOGGER.error("Unable To Transform Request Headers");
-            // TODO
+            LOGGER.warn("Unable To Transform Request Headers");
         }
 
         return requestHeaderVO;
@@ -43,7 +43,7 @@ public class HeaderUtils {
     public static void validateRequestHeader(RequestHeaderVO requestHeaderVO) {
 
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        javax.validation.Validator validator = validatorFactory.getValidator();
+        Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<RequestHeaderVO>> constraintViolations = validator.validate(requestHeaderVO);
 
         if (constraintViolations.toArray().length != 0) {

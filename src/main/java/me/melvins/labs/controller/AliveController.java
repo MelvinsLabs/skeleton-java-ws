@@ -9,6 +9,7 @@ import me.melvins.labs.exception.KnownException;
 import me.melvins.labs.exception.RequestHeaderValidationException;
 import me.melvins.labs.exception.UnknownException;
 import me.melvins.labs.exception.handling.ErrorCode;
+import me.melvins.labs.pojo.models.DomainModel;
 import me.melvins.labs.pojo.vo.RequestHeaderVO;
 import me.melvins.labs.pojo.vo.ResponseVO;
 import org.apache.logging.log4j.LogManager;
@@ -71,18 +72,29 @@ public class AliveController {
         return new ResponseEntity<>(responseVO, null, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "Test", method = RequestMethod.POST) // TODO
-    public ResponseEntity<ResponseVO> testPost(@RequestHeader Map<String, String> headers, String checker) {
+    @RequestMapping(value = "Test", method = RequestMethod.POST)
+    public ResponseEntity<ResponseVO> testPost(@RequestHeader Map<String, String> headers,
+                                               @RequestBody DomainModel domainModel) {
 
-        LOGGER.info("Is Alive");
+        ResponseVO responseVO = null;
+        try {
+            LOGGER.info("Is Alive");
 
-        List<String> strings = new ArrayList<>();
-        strings.add("Is");
-        strings.add("Alive");
-        strings.add(checker);
+            List<String> strings = new ArrayList<>();
+            strings.add("Is");
+            strings.add("Alive");
 
-        ResponseVO responseVO = new ResponseVO();
-        responseVO.setStringList(strings);
+            LOGGER.debug("Request Body : {0}", domainModel);
+            domainModel.getIdentifiers().forEach((k, v) -> {
+                strings.add(k + " : " + v);
+            });
+
+            responseVO = new ResponseVO();
+            responseVO.setStringList(strings);
+
+        } catch (Exception ex) {
+            handleExceptions(ex);
+        }
 
         return new ResponseEntity<>(responseVO, null, HttpStatus.OK);
     }

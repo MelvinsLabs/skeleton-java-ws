@@ -7,7 +7,7 @@
     </Properties>
 
     <Appenders>
-        <RollingRandomAccessFile name="LogFile" fileName="${logFilePrefix}"
+        <RollingRandomAccessFile name="LogFile" fileName="${logFilePrefix}.log"
                                  filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
                 <Pattern>${logPattern}</Pattern>
@@ -25,11 +25,11 @@
     </Appenders>
 
     <Loggers>
-        <AsyncLogger name="me.melvins.labs" level="DEBUG" additivity="false" includeLocation="true">
+        <AsyncLogger name="me.melvins.labs" level="DEBUG" additivity="false" includeLocation="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="LogFile"/>
         </AsyncLogger>
-        <AsyncLogger name="org.springframework" level="WARN" additivity="false">
+        <AsyncLogger name="org.springframework" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="LogFile"/>
         </AsyncLogger>
