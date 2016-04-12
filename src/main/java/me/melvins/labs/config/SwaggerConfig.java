@@ -43,8 +43,6 @@ public class SwaggerConfig {
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .build()
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET,
@@ -53,7 +51,9 @@ public class SwaggerConfig {
                                         .code(INTERNAL_SERVER_ERROR.value())
                                         .message(INTERNAL_SERVER_ERROR.name())
                                         .responseModel(new ModelRef("ERROR"))
-                                        .build()));
+                                        .build()))
+                .select()
+                .build();
     }
 
     /**

@@ -38,7 +38,6 @@ public class WebConfig implements WebApplicationInitializer {
 
         FilterRegistration.Dynamic logging = servletContext.addFilter("logging", new LoggingFilter());
 
-
         EnumSet<DispatcherType> dispatcherTypeEnumSet = EnumSet.of(DispatcherType.REQUEST);
         logging.addMappingForServletNames(dispatcherTypeEnumSet, true, "dispatcher");
     }

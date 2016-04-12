@@ -10,6 +10,7 @@ import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.message.MessageFormatMessageFactory;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import static me.melvins.labs.constants.LoggingConstants.CID;
@@ -31,7 +32,9 @@ public class LoggingFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
-        ThreadContext.put(CID.name(), "TODO"); // TODO
+        HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
+
+        ThreadContext.put(CID.name(), httpServletRequest.getHeader("CorrelationId"));
 
         LOGGER.debug("Beginning Actual Request Processing");
         filterChain.doFilter(servletRequest, servletResponse);
