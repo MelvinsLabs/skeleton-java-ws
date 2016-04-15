@@ -34,7 +34,7 @@ public class WebConfig implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
     }
 
-    private void createLoggingFilter(ServletContext servletContext) { //TODO
+    private void createLoggingFilter(ServletContext servletContext) {
 
         FilterRegistration.Dynamic logging = servletContext.addFilter("logging", new LoggingFilter());
 

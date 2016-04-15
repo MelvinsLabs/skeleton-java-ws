@@ -22,13 +22,21 @@ import java.util.Set;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
+ * The Exception Handler with {@link @ControllerAdvice}.
+ *
  * @author Mels
  */
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
+    /**
+     *
+     * @param ex
+     * @param webRequest
+     * @return
+     */
     @ExceptionHandler(value = RequestHeaderValidationException.class)
-    public ResponseEntity<Object> handleUnknownException(RequestHeaderValidationException ex,
+    public ResponseEntity<Object> handleRequestHeaderValidationException(RequestHeaderValidationException ex,
                                                          WebRequest webRequest) {
 
         Set<ConstraintViolation<RequestHeaderVO>> constraintViolations = ex.getConstraintViolations();
@@ -40,6 +48,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, null, httpHeaders, BAD_REQUEST, webRequest);
     }
 
+    /**
+     *
+     * @param ex
+     * @param webRequest
+     * @return
+     */
     @ExceptionHandler(value = KnownException.class)
     public ResponseEntity<Object> handleKnownException(KnownException ex, WebRequest webRequest) {
 
@@ -53,6 +67,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, error, httpHeaders, httpStatus, webRequest);
     }
 
+    /**
+     *
+     * @param ex
+     * @param webRequest
+     * @return
+     */
     @ExceptionHandler(value = UnknownException.class)
     public ResponseEntity<Object> handleUnknownException(UnknownException ex, WebRequest webRequest) {
 

@@ -5,7 +5,7 @@
 
     <groupId>me.melvins.labs</groupId>
     <artifactId>skeleton-java-webapp</artifactId>
-    <version>0.0.0.0-SNAPSHOT</version>
+    <version>0.0.0.6</version>
     <packaging>jar</packaging>
 
     <name>skeleton-java-webapp</name>
@@ -26,7 +26,7 @@
 
         <!-- 3rd Party Dependency Versions -->
         <com.lmax.disruptor.version>3.3.4</com.lmax.disruptor.version>
-        <io.springfox.version>2.2.2</io.springfox.version>
+        <io.springfox.version>2.3.1</io.springfox.version>
         <junit.version>4.12</junit.version>
         <org.apache.logging.log4j.version>2.5</org.apache.logging.log4j.version>
         <org.apache.tomcat.embed.version>8.0.30</org.apache.tomcat.embed.version>
@@ -164,7 +164,7 @@
     </dependencies>
 
     <build>
-        <finalName>${artifactId}</finalName>
+        <finalName>skeleton-java-webapp</finalName>
 
         <plugins>
             <!-- START OF PLUGINS -->

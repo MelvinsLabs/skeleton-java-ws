@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * DomainModel
+ *
  * @author Mels
  */
 public class DomainModel {
@@ -25,6 +27,11 @@ public class DomainModel {
         return identifiers;
     }
 
+    /**
+     * Overriding {@code toString} implementation.
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "DomainModel{" +

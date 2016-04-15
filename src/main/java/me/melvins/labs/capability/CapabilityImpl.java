@@ -30,7 +30,7 @@ public class CapabilityImpl implements Capability {
     public void process() {
 
         try {
-            //execute();
+            execute();
             throw new ParseException("", 0);
 
         } catch (ParseException ex) {

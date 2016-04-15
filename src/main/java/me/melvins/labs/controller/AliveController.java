@@ -29,6 +29,8 @@ import static me.melvins.labs.utils.HeaderUtils.validateRequestHeader;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 /**
+ * Sample Controller
+ *
  * @author Mels
  */
 @RestController
@@ -41,6 +43,13 @@ public class AliveController {
     private static final Logger LOGGER = LogManager.getLogger(AliveController.class,
             new MessageFormatMessageFactory());
 
+    /**
+     * Sample GET Operation.
+     *
+     * @param headers Request Headers
+     * @param checker {@link RequestParam} check
+     * @return {@code ResponseVO} wrapped as a {@link ResponseEntity}
+     */
     @RequestMapping(value = "Test", method = RequestMethod.GET)
     public ResponseEntity<ResponseVO> testGet(@RequestHeader Map<String, Object> headers,
                                               @RequestParam(name = "check") String checker) {
@@ -48,7 +57,7 @@ public class AliveController {
 
         ResponseVO responseVO = null;
         try {
-            RequestHeaderVO requestHeaderVO = transformRequestHeader(headers, RequestHeaderVO.class);
+            RequestHeaderVO requestHeaderVO = transformRequestHeader(headers);
 
             validateRequestHeader(requestHeaderVO);
 
@@ -72,13 +81,25 @@ public class AliveController {
         return new ResponseEntity<>(responseVO, null, HttpStatus.OK);
     }
 
+    /**
+     * Sample POST Operation.
+     *
+     * @param headers     Request Headers
+     * @param domainModel {@link DomainModel} to hold the Request Body
+     * @return {@code ResponseVO} wrapped as a {@link ResponseEntity}
+     */
     @RequestMapping(value = "Test", method = RequestMethod.POST)
-    public ResponseEntity<ResponseVO> testPost(@RequestHeader Map<String, String> headers,
+    public ResponseEntity<ResponseVO> testPost(@RequestHeader Map<String, Object> headers,
                                                @RequestBody DomainModel domainModel) {
+
+        LOGGER.info("Is Alive");
 
         ResponseVO responseVO = null;
         try {
-            LOGGER.info("Is Alive");
+
+            RequestHeaderVO requestHeaderVO = transformRequestHeader(headers);
+
+            validateRequestHeader(requestHeaderVO);
 
             List<String> strings = new ArrayList<>();
             strings.add("Is");
@@ -99,6 +120,11 @@ public class AliveController {
         return new ResponseEntity<>(responseVO, null, HttpStatus.OK);
     }
 
+    /**
+     * Generic method to handle Exception from the Controller Operations.
+     *
+     * @param ex Exception to handle.
+     */
     private void handleExceptions(Exception ex) {
 
         if (ex instanceof RequestHeaderValidationException) {

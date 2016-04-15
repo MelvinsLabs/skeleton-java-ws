@@ -12,6 +12,8 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
+ * Bean Utility Functions.
+ *
  * @author Mels
  */
 public class BeanUtils {
@@ -19,6 +21,15 @@ public class BeanUtils {
     private static final Logger LOGGER = LogManager.getLogger(BeanUtils.class,
             new MessageFormatMessageFactory());
 
+    /**
+     * Fill Bean with appropirate Key-Value pairs.
+     *
+     * @param headers Key-Value pair to be formed into a POJO.
+     * @param clazz   The POJO to populate the Key-Value pairs.
+     * @return The POJO populated with coressponding Keys in the Map.
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     public static Object fillBean(Map<String, Object> headers, Class clazz) throws InstantiationException,
             IllegalAccessException {
 

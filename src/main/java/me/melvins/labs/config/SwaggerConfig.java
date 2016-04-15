@@ -57,7 +57,9 @@ public class SwaggerConfig {
     }
 
     /**
-     * @return
+     * Api Information.
+     *
+     * @return ApiInfo
      */
     private ApiInfo apiInfo() {
         return new ApiInfo("Skeleton Service", "Skeleton Java REST Service", "0.1",
