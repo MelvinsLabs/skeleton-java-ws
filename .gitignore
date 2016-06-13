@@ -1,0 +1,6 @@
+# IntelliJ IDE Project Settings
+*idea/
+*.iml
+# Application Specific
+*target/
+*.log
