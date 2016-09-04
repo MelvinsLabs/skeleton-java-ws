@@ -5,7 +5,7 @@
 
     <groupId>me.melvins.labs</groupId>
     <artifactId>skeleton-java-webapp</artifactId>
-    <version>0.0.0.6</version>
+    <version>1.0.0.${BUILD_NUMBER}</version>
     <packaging>jar</packaging>
 
     <name>skeleton-java-webapp</name>
