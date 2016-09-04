@@ -8,7 +8,7 @@
     <version>1.0.0.${BUILD_NUMBER}</version>
     <packaging>jar</packaging>
 
-    <name>skeleton-java-webapp</name>
+    <name>Skeleton Java WebApp</name>
     <description>This is a basic skeleton project to kick start a WebApp build.</description>
 
     <developers>
