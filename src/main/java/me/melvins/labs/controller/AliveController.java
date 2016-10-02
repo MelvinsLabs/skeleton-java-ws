@@ -70,7 +70,7 @@ public class AliveController {
             responseVO = new ResponseVO();
             responseVO.setStringList(strings);
 
-            capabilityImpl.process();
+            //capabilityImpl.process();
 
             // TODO transform Response Headers.
 
