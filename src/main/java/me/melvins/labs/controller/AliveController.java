@@ -53,7 +53,7 @@ public class AliveController {
     @RequestMapping(value = "Test", method = RequestMethod.GET)
     public ResponseEntity<ResponseVO> testGet(@RequestHeader Map<String, Object> headers,
                                               @RequestParam(name = "check") String checker) {
-        LOGGER.debug("Testing Alive");
+        LOGGER.debug("Testing Alive {0}", checker);
 
         ResponseVO responseVO = null;
         try {
