@@ -17,8 +17,12 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolation;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import static me.melvins.labs.exception.handling.ErrorCode.EC211;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
@@ -30,26 +34,29 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
-     *
      * @param ex
      * @param webRequest
      * @return
      */
     @ExceptionHandler(value = RequestHeaderValidationException.class)
     public ResponseEntity<Object> handleRequestHeaderValidationException(RequestHeaderValidationException ex,
-                                                         WebRequest webRequest) {
+                                                                         WebRequest webRequest) {
 
         Set<ConstraintViolation<RequestHeaderVO>> constraintViolations = ex.getConstraintViolations();
 
+        List<String> errorList = new ArrayList<>();
         for (ConstraintViolation<RequestHeaderVO> s : constraintViolations) {
+            ErrorCode errorCode = ErrorCode.valueOf(s.getMessage());
+            errorList.add(MessageFormat.format(errorCode.toString(), s.getInvalidValue()));
         }
 
+        Error error = new Error(EC211.name(), ex.getMessage(), errorList);
+
         HttpHeaders httpHeaders = new HttpHeaders();
-        return handleExceptionInternal(ex, null, httpHeaders, BAD_REQUEST, webRequest);
+        return handleExceptionInternal(ex, error, httpHeaders, BAD_REQUEST, webRequest);
     }
 
     /**
-     *
      * @param ex
      * @param webRequest
      * @return
@@ -68,7 +75,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     *
      * @param ex
      * @param webRequest
      * @return

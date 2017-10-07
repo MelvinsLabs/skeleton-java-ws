@@ -10,9 +10,13 @@ package me.melvins.labs.constants;
 public enum LoggingConstants {
 
     /**
-     * CorrelationID
+     * CorrelationId
      */
-    CID("CorrelationID");
+    CID("CorrelationId"),
+    /**
+     * RequesterId
+     */
+    RID("RequesterId");
 
     /**
      * Constructor

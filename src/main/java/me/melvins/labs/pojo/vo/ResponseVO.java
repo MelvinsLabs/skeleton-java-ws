@@ -5,6 +5,7 @@
 package me.melvins.labs.pojo.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * @author Mels
  */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ResponseVO {
 
     @JsonProperty(value = "Strings", index = 1)
@@ -30,15 +32,6 @@ public class ResponseVO {
     }
 
     /**
-     * Getter for {@code stringList}.
-     *
-     * @return
-     */
-    public List<String> getStringList() {
-        return stringList;
-    }
-
-    /**
      * Setter for {@code stringList}.
      *
      * @param stringList
@@ -47,22 +40,12 @@ public class ResponseVO {
         this.stringList = stringList;
     }
 
-    /**
-     * Getter for {@code date}.
-     *
-     * @return
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * Setter for {@code date}.
-     *
-     * @param date
-     */
-    public void setDate(Date date) {
-        this.date = date;
+    @Override
+    public String toString() {
+        return "ResponseVO{" +
+                "stringList=" + stringList +
+                ", date=" + date +
+                '}';
     }
 
 }

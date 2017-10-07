@@ -18,7 +18,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "me.melvins.labs")
-@PropertySource(value = "classpath:application.properties")
 @Import(value = SwaggerConfig.class)
 public class AppConfig extends WebMvcConfigurerAdapter {
 

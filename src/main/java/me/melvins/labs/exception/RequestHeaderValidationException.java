@@ -26,4 +26,11 @@ public class RequestHeaderValidationException extends RuntimeException {
         return constraintViolations;
     }
 
+    @Override
+    public String toString() {
+        return "RequestHeaderValidationException{" +
+                "message=" + super.getMessage() +
+                ", constraintViolations=" + constraintViolations +
+                '}';
+    }
 }

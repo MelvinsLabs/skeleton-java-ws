@@ -9,11 +9,17 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.message.MessageFormatMessageFactory;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import static me.melvins.labs.constants.LoggingConstants.CID;
+import static me.melvins.labs.constants.LoggingConstants.RID;
 
 /**
  * {@link Filter} implementation for Logging to inject each Request identifiers in the Logs.
@@ -22,8 +28,8 @@ import static me.melvins.labs.constants.LoggingConstants.CID;
  */
 public class LoggingFilter implements Filter {
 
-    private static final Logger LOGGER = LogManager.getLogger(LoggingFilter.class,
-            new MessageFormatMessageFactory());
+    private static final Logger LOGGER =
+            LogManager.getLogger(LoggingFilter.class, new MessageFormatMessageFactory());
 
     /**
      * Overriding {@code init} implementation of the Filter.
@@ -33,7 +39,7 @@ public class LoggingFilter implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        LOGGER.info("Initializing LoggingFilter");
+        LOGGER.info("....... Initializing LoggingFilter .......");
     }
 
     /**
@@ -51,12 +57,15 @@ public class LoggingFilter implements Filter {
      * @throws ServletException
      */
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain)
             throws IOException, ServletException {
 
-        HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        ThreadContext.put(CID.name(), httpServletRequest.getHeader("CorrelationId"));
+        ThreadContext.put(CID.name(), httpServletRequest.getHeader(CID.getDescription()));
+        ThreadContext.put(RID.name(), httpServletRequest.getHeader(RID.getDescription()));
 
         LOGGER.debug("Beginning Actual Request Processing");
         filterChain.doFilter(servletRequest, servletResponse);

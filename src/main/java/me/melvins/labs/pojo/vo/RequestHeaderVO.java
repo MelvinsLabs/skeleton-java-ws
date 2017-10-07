@@ -4,12 +4,21 @@
 
 package me.melvins.labs.pojo.vo;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * @author Mels
  */
 public class RequestHeaderVO {
 
+    @NotEmpty(message = "EC221")
     private String correlationId;
+
+    @NotEmpty(message = "EC222")
+    private String requesterId;
+
+    @NotEmpty(message = "EC223")
+    private String businessContext;
 
     private String version;
 

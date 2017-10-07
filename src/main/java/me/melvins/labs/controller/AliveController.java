@@ -4,10 +4,16 @@
 
 package me.melvins.labs.controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import me.melvins.labs.capability.Capability;
 import me.melvins.labs.exception.KnownException;
 import me.melvins.labs.exception.RequestHeaderValidationException;
 import me.melvins.labs.exception.UnknownException;
+import me.melvins.labs.exception.handling.Error;
 import me.melvins.labs.exception.handling.ErrorCode;
 import me.melvins.labs.pojo.models.DomainModel;
 import me.melvins.labs.pojo.vo.RequestHeaderVO;
@@ -16,17 +22,30 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.MessageFormatMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static me.melvins.labs.constants.StringConstants.HEADER;
+import static me.melvins.labs.constants.StringConstants.STRING;
+import static me.melvins.labs.constants.StringConstants.V1;
+import static me.melvins.labs.exception.handling.ErrorCode.EC300;
+import static me.melvins.labs.utils.HeaderUtils.createResponseHeaders;
 import static me.melvins.labs.utils.HeaderUtils.transformRequestHeader;
 import static me.melvins.labs.utils.HeaderUtils.validateRequestHeader;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Sample Controller
@@ -38,22 +57,33 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public class AliveController {
 
     @Autowired
+    private Environment env;
+
+    @Autowired
     private Capability capabilityImpl;
 
-    private static final Logger LOGGER = LogManager.getLogger(AliveController.class,
-            new MessageFormatMessageFactory());
+    private static final Logger LOGGER =
+            LogManager.getLogger(AliveController.class, new MessageFormatMessageFactory());
 
-    /**
-     * Sample GET Operation.
-     *
-     * @param headers Request Headers
-     * @param checker {@link RequestParam} check
-     * @return {@code ResponseVO} wrapped as a {@link ResponseEntity}
-     */
-    @RequestMapping(value = "Test", method = RequestMethod.GET)
-    public ResponseEntity<ResponseVO> testGet(@RequestHeader Map<String, Object> headers,
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "CorrelationId", value = "Unique Correlation Id For Each Request",
+                    required = true, dataType = STRING, paramType = HEADER),
+            @ApiImplicitParam(name = "RequesterId", value = "Unique Requester Id",
+                    required = true, dataType = STRING, paramType = HEADER),
+            @ApiImplicitParam(name = "BusinessContext", value = "Business Context / Requester's Requester Id",
+                    required = true, dataType = STRING, paramType = HEADER),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful Scenario", response = ResponseVO.class),
+            @ApiResponse(code = 400, message = "INTERNAL_SERVER_ERROR", response = Error.class)
+    })
+    @RequestMapping(value = "Test", method = GET, consumes = {V1}, produces = {V1})
+    public ResponseEntity<ResponseVO> testGet(@ApiIgnore
+                                              @RequestHeader Map<String, Object> headers,
+                                              @ApiParam(name = "check", type = STRING, required = true)
                                               @RequestParam(name = "check") String checker) {
-        LOGGER.debug("Testing Alive {0}", checker);
+
+        LOGGER.debug("Testing Alive {0} {1}", checker, env.getProperty("ws.env"));
 
         ResponseVO responseVO = null;
         try {
@@ -72,24 +102,28 @@ public class AliveController {
 
             //capabilityImpl.process();
 
-            // TODO transform Response Headers.
-
         } catch (Exception ex) {
             handleExceptions(ex);
         }
 
-        return new ResponseEntity<>(responseVO, null, HttpStatus.OK);
+        return new ResponseEntity<>(responseVO, createResponseHeaders(), OK);
     }
 
-    /**
-     * Sample POST Operation.
-     *
-     * @param headers     Request Headers
-     * @param domainModel {@link DomainModel} to hold the Request Body
-     * @return {@code ResponseVO} wrapped as a {@link ResponseEntity}
-     */
-    @RequestMapping(value = "Test", method = RequestMethod.POST)
-    public ResponseEntity<ResponseVO> testPost(@RequestHeader Map<String, Object> headers,
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "CorrelationId", value = "Unique Correlation Id For Each Request",
+                    required = true, dataType = STRING, paramType = HEADER),
+            @ApiImplicitParam(name = "RequesterId", value = "Unique Requester Id",
+                    required = true, dataType = STRING, paramType = HEADER),
+            @ApiImplicitParam(name = "BusinessContext", value = "Business Context / Requester's Requester Id",
+                    required = true, dataType = STRING, paramType = HEADER),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successful Scenario", response = ResponseVO.class),
+            @ApiResponse(code = 400, message = "INTERNAL_SERVER_ERROR", response = Error.class)
+    })
+    @RequestMapping(value = "Test", method = POST, consumes = {V1}, produces = {V1})
+    public ResponseEntity<ResponseVO> testPost(@ApiIgnore
+                                               @RequestHeader Map<String, Object> headers,
                                                @RequestBody DomainModel domainModel) {
 
         LOGGER.info("Is Alive");
@@ -117,7 +151,7 @@ public class AliveController {
             handleExceptions(ex);
         }
 
-        return new ResponseEntity<>(responseVO, null, HttpStatus.OK);
+        return new ResponseEntity<>(responseVO, createResponseHeaders(), OK);
     }
 
     /**
@@ -134,7 +168,7 @@ public class AliveController {
             throw (KnownException) ex;
 
         } else {
-            ErrorCode errorCode = ErrorCode.EC1000;
+            ErrorCode errorCode = EC300;
             LOGGER.error(errorCode.toString(), ex);
             throw new UnknownException(INTERNAL_SERVER_ERROR, errorCode, ex);
         }

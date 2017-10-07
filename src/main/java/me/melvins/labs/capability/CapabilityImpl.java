@@ -34,7 +34,7 @@ public class CapabilityImpl implements Capability {
             throw new ParseException("", 0);
 
         } catch (ParseException ex) {
-            ErrorCode errorCode = ErrorCode.EC1001;
+            ErrorCode errorCode = ErrorCode.EC101;
             LOGGER.error(errorCode.toString(), "{data}", Class.class.getName(), ex);
             String displayMessage = MessageFormat.format(errorCode.getMessage(), "", Class.class.getSimpleName());
             throw new KnownException(INTERNAL_SERVER_ERROR, errorCode, displayMessage, ex);
@@ -47,7 +47,7 @@ public class CapabilityImpl implements Capability {
             throw new SQLException();
 
         } catch (SQLException ex) {
-            ErrorCode errorCode = ErrorCode.EC1002;
+            ErrorCode errorCode = ErrorCode.EC102;
             LOGGER.error(errorCode.toString(), ex);
             String displayMessage = errorCode.getMessage();
             throw new KnownException(INTERNAL_SERVER_ERROR, errorCode, displayMessage, ex);

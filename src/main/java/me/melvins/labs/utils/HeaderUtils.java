@@ -9,6 +9,7 @@ import me.melvins.labs.pojo.vo.RequestHeaderVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.MessageFormatMessageFactory;
+import org.springframework.http.HttpHeaders;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -16,6 +17,11 @@ import javax.validation.ValidatorFactory;
 import java.util.Map;
 import java.util.Set;
 
+import static java.lang.String.valueOf;
+import static java.lang.System.currentTimeMillis;
+import static java.text.MessageFormat.format;
+import static me.melvins.labs.exception.handling.ErrorCode.EC211;
+import static me.melvins.labs.exception.handling.ErrorCode.EC231;
 import static me.melvins.labs.utils.BeanUtils.fillBean;
 
 /**
@@ -23,10 +29,16 @@ import static me.melvins.labs.utils.BeanUtils.fillBean;
  *
  * @author Mels
  */
-public class HeaderUtils {
+public final class HeaderUtils {
 
-    private static final Logger LOGGER = LogManager.getLogger(HeaderUtils.class,
-            new MessageFormatMessageFactory());
+    private static final Logger LOGGER =
+            LogManager.getLogger(HeaderUtils.class, new MessageFormatMessageFactory());
+
+    /**
+     * Privatized Default Constructor To Avoid Object Instantiation.
+     */
+    private HeaderUtils() {
+    }
 
     /**
      * Transform the Request Headers as Map, into {@link RequestHeaderVO}.
@@ -41,7 +53,8 @@ public class HeaderUtils {
             requestHeaderVO = (RequestHeaderVO) fillBean(headers, RequestHeaderVO.class);
 
         } catch (InstantiationException | IllegalAccessException ex) {
-            LOGGER.error("Unable To Transform Request Headers");
+            String errorMessage = format(EC231.toString(), headers);
+            LOGGER.error(errorMessage);
             // TODO
         }
 
@@ -59,10 +72,26 @@ public class HeaderUtils {
         javax.validation.Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<RequestHeaderVO>> constraintViolations = validator.validate(requestHeaderVO);
 
-        if (constraintViolations.toArray().length != 0) {
-            String message = "Validation Errors In Request Header";
-            throw new RequestHeaderValidationException(message, constraintViolations);
+        int violationCount = constraintViolations.toArray().length;
+
+        if (violationCount != 0) {
+            String errorMessage = format(EC211.toString(), violationCount);
+            LOGGER.error(errorMessage);
+            throw new RequestHeaderValidationException(errorMessage, constraintViolations);
         }
+    }
+
+    public static HttpHeaders createResponseHeaders() {
+
+        String hostIp = HostUtils.getHostIp();
+        //String address = hostIp.split(".")[2];
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("ResponseHost", hostIp);
+        httpHeaders.set("ResponseTimeStamp", valueOf(currentTimeMillis()));
+
+        return httpHeaders;
+
     }
 
 }

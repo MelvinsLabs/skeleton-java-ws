@@ -2,19 +2,19 @@
 <Configuration monitorInterval="10">
 
     <Properties>
-        <Property name="logFilePrefix">app-logs</Property>
+        <Property name="logFilePrefix">logs/app</Property>
         <Property name="logPattern">%d{DEFAULT} [%level] %X{CID} %c - %m%n</Property>
     </Properties>
 
     <Appenders>
-        <RollingRandomAccessFile name="LogFile" fileName="${logFilePrefix}.log"
-                                 filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+        <RollingRandomAccessFile name="LogFile"
+                                 fileName="${logFilePrefix}.log"
+                                 filePattern="${logFilePrefix}-%i.log.gz">
             <PatternLayout>
                 <Pattern>${logPattern}</Pattern>
             </PatternLayout>
 
             <Policies>
-                <TimeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="100 MB"/>
             </Policies>
         </RollingRandomAccessFile>
@@ -34,6 +34,10 @@
             <AppenderRef ref="LogFile"/>
         </AsyncLogger>
         <AsyncLogger name="org.apache" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogFile"/>
+        </AsyncLogger>
+        <AsyncLogger name="springfox.documentation" level="WARN" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="LogFile"/>
         </AsyncLogger>

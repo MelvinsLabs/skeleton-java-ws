@@ -1,6 +1,12 @@
+# Application Specific
+*target/
+*.zip
+*.log
+
 # IntelliJ IDE Project Settings
 *idea/
 *.iml
-# Application Specific
-*target/
-*.log
+
+# Eclipse IDE Workspace Settings
+*.settings/
+*.classpath

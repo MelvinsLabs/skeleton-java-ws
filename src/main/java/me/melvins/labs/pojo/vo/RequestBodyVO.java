@@ -55,4 +55,12 @@ public class RequestBodyVO {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "RequestBodyVO{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
 }
