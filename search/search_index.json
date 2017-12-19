@@ -1,14 +1,24 @@
 {
     "docs": [
         {
-            "location": "/ReadMe/", 
+            "location": "/", 
             "text": "ReadMe First\n\n\nThis repository holds a skeleton for a simple Java Web Application.\n\n\nThis Web Application is a REST Web Service using SPRING FRAMEWORK.\n\n\nPackaging \n Execution using SPRING BOOT FRAMEWORK \n APACHE TOMCAT EMBED CONTAINER.\n\n\nLogging Framework using APACHE LOG4J2 with Asynchronous LMAX DISRUPTOR.\n\n\nAPI Documentation using Swagger API via SPRINGFOX Libraries.", 
             "title": "Home"
         }, 
         {
-            "location": "/ReadMe/#readme-first", 
+            "location": "/#readme-first", 
             "text": "This repository holds a skeleton for a simple Java Web Application.  This Web Application is a REST Web Service using SPRING FRAMEWORK.  Packaging   Execution using SPRING BOOT FRAMEWORK   APACHE TOMCAT EMBED CONTAINER.  Logging Framework using APACHE LOG4J2 with Asynchronous LMAX DISRUPTOR.  API Documentation using Swagger API via SPRINGFOX Libraries.", 
             "title": "ReadMe First"
+        }, 
+        {
+            "location": "/how/", 
+            "text": "How To\n\n\nRun \njava -jar skeleton-java-webapp.jar", 
+            "title": "HowTo"
+        }, 
+        {
+            "location": "/how/#how-to", 
+            "text": "Run  java -jar skeleton-java-webapp.jar", 
+            "title": "How To"
         }
     ]
 }

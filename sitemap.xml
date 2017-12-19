@@ -3,7 +3,15 @@
 
     
     <url>
-     <loc>/ReadMe/</loc>
+     <loc>/</loc>
+     <lastmod>2017-12-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/how/</loc>
      <lastmod>2017-12-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
