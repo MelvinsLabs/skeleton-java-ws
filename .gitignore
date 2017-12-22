@@ -10,3 +10,6 @@
 # Eclipse IDE Workspace Settings
 *.settings/
 *.classpath
+
+# macOS system files
+.DS_Store

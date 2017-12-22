@@ -3,20 +3,22 @@
 
     <Properties>
         <Property name="logFilePrefix">logs/app</Property>
-        <Property name="logPattern">%d{DEFAULT} [%level] %X{CID} %c - %m%n</Property>
+        <Property name="logPattern">%d{DEFAULT} %t [%level] %X{CID} %c - %m%n</Property>
     </Properties>
 
     <Appenders>
         <RollingRandomAccessFile name="LogFile"
                                  fileName="${logFilePrefix}.log"
-                                 filePattern="${logFilePrefix}-.log.%i">
+                                 filePattern="${logFilePrefix}.log.%i">
             <PatternLayout>
                 <Pattern>${logPattern}</Pattern>
             </PatternLayout>
 
             <Policies>
-                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
             </Policies>
+            
+            <DefaultRolloverStrategy max="20"/>
         </RollingRandomAccessFile>
 
         <Console name="Console" target="SYSTEM_OUT">
