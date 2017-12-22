@@ -9,7 +9,7 @@
     <Appenders>
         <RollingRandomAccessFile name="LogFile"
                                  fileName="${logFilePrefix}.log"
-                                 filePattern="${logFilePrefix}-%i.log.gz">
+                                 filePattern="${logFilePrefix}-.log.%i">
             <PatternLayout>
                 <Pattern>${logPattern}</Pattern>
             </PatternLayout>

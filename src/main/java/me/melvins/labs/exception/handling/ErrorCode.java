@@ -52,17 +52,19 @@ public enum ErrorCode {
     /**
      *
      */
-    EC300("Unknown Exception"),
-
+    EC311("Unknown Exception"),
     /**
      *
      */
-    EC101("Unexpected Exception While Parsing {0} To {1}"),
-
+    EC321("Unexpected Exception While Parsing {0} To {1}"),
     /**
      *
      */
-    EC102("Unexpected Exception While Accessing DataStore");
+    EC322("Unexpected Exception While Accessing DataStore"),
+    /**
+     *
+     */
+    EC911("UnknownHostException - {0}");
 
     private String message;
 

@@ -4,6 +4,10 @@
 
 package me.melvins.labs.constants;
 
+import static me.melvins.labs.constants.ControllerConstants._BC;
+import static me.melvins.labs.constants.ControllerConstants._CID;
+import static me.melvins.labs.constants.ControllerConstants._RID;
+
 /**
  * @author Mels
  */
@@ -12,11 +16,11 @@ public enum LoggingConstants {
     /**
      * CorrelationId
      */
-    CID("CorrelationId"),
+    CID(_CID),
     /**
      * RequesterId
      */
-    RID("RequesterId");
+    RID(_RID);
 
     /**
      * Constructor

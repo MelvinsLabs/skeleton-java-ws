@@ -35,10 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static me.melvins.labs.constants.StringConstants.HEADER;
-import static me.melvins.labs.constants.StringConstants.STRING;
-import static me.melvins.labs.constants.StringConstants.V1;
-import static me.melvins.labs.exception.handling.ErrorCode.EC300;
+import static me.melvins.labs.constants.ControllerConstants.*;
+import static me.melvins.labs.exception.handling.ErrorCode.EC311;
 import static me.melvins.labs.utils.HeaderUtils.createResponseHeaders;
 import static me.melvins.labs.utils.HeaderUtils.transformRequestHeader;
 import static me.melvins.labs.utils.HeaderUtils.validateRequestHeader;
@@ -48,7 +46,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
- * Sample Controller
+ * Alive Controller
  *
  * @author Mels
  */
@@ -66,12 +64,14 @@ public class AliveController {
             LogManager.getLogger(AliveController.class, new MessageFormatMessageFactory());
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "CorrelationId", value = "Unique Correlation Id For Each Request",
+            @ApiImplicitParam(name = _CID, value = _CIDDescription,
                     required = true, dataType = STRING, paramType = HEADER),
-            @ApiImplicitParam(name = "RequesterId", value = "Unique Requester Id",
+            @ApiImplicitParam(name = _RID, value = _RIDDescription,
                     required = true, dataType = STRING, paramType = HEADER),
-            @ApiImplicitParam(name = "BusinessContext", value = "Business Context / Requester's Requester Id",
+            @ApiImplicitParam(name = _BC, value = _BCDescription,
                     required = true, dataType = STRING, paramType = HEADER),
+            @ApiImplicitParam(name = _CT, value = _CTDescription, allowableValues = V1,
+                    required = true, dataType = STRING, paramType = HEADER)
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successful Scenario", response = ResponseVO.class),
@@ -110,12 +110,15 @@ public class AliveController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "CorrelationId", value = "Unique Correlation Id For Each Request",
+            @ApiImplicitParam(name = _CID, value = _CIDDescription,
                     required = true, dataType = STRING, paramType = HEADER),
-            @ApiImplicitParam(name = "RequesterId", value = "Unique Requester Id",
+            @ApiImplicitParam(name = _RID, value = _RIDDescription,
                     required = true, dataType = STRING, paramType = HEADER),
-            @ApiImplicitParam(name = "BusinessContext", value = "Business Context / Requester's Requester Id",
+            @ApiImplicitParam(name = _BC, value = _BCDescription,
                     required = true, dataType = STRING, paramType = HEADER),
+            @ApiImplicitParam(name = _CT, value = _CTDescription,
+                    allowableValues = V1,
+                    required = true, dataType = STRING, paramType = HEADER)
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successful Scenario", response = ResponseVO.class),
@@ -168,7 +171,7 @@ public class AliveController {
             throw (KnownException) ex;
 
         } else {
-            ErrorCode errorCode = EC300;
+            ErrorCode errorCode = EC311;
             LOGGER.error(errorCode.toString(), ex);
             throw new UnknownException(INTERNAL_SERVER_ERROR, errorCode, ex);
         }

@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public final class BeanUtils {
 
-
     /**
      * Privatized Default Constructor To Avoid Object Instantiation.
      */

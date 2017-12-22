@@ -84,7 +84,6 @@ public final class HeaderUtils {
     public static HttpHeaders createResponseHeaders() {
 
         String hostIp = HostUtils.getHostIp();
-        //String address = hostIp.split(".")[2];
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("ResponseHost", hostIp);
