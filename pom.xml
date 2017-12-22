@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.melvins.labs</groupId>
-    <artifactId>skeleton-java-webapp</artifactId>
+    <artifactId>skeleton-java-ws</artifactId>
     <version>1.0.0.${BUILD_NUMBER}</version>
     <packaging>jar</packaging>
 
-    <name>Skeleton Java WebApp</name>
-    <description>This is a basic skeleton project to kick start a WebApp build.</description>
+    <name>Skeleton Java WebService</name>
+    <description>This is a basic skeleton project to kick start a WebService implementation</description>
 
     <developers>
         <developer>
@@ -173,7 +173,7 @@
     </dependencies>
 
     <build>
-        <finalName>SkeletonJavaWebApp</finalName>
+        <finalName>SkeletonJava</finalName>
 
         <plugins>
             <!-- START OF PLUGINS -->
